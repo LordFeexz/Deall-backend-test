@@ -7,6 +7,9 @@ class Controller {
     try {
       const { name, username, email, password, role } = req.body;
 
+      if (!name || !username || !email || !password || !role)
+        throw { name: "invalid input" };
+
       const user = await User.findOne({ email });
 
       if (user || user !== null)

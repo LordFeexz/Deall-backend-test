@@ -1,5 +1,4 @@
 const errorHandler = (err, req, res, next) => {
-  console.log(err);
   let status = 500;
   let message = "Internal Server Error";
 
@@ -15,6 +14,9 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name == "invalid_credentials") {
     status = 401;
     message = "invalid email/password";
+  } else if (err.name == "invalid input") {
+    status = 400;
+    message = err.name;
   }
   res.status(status).json({ message });
 };
