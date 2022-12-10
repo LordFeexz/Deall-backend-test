@@ -7,8 +7,15 @@ class User {
 
   static async findAll() {
     try {
-      const collection = this.getCollection();
-      return await collection.find().toArray();
+      return await this.getCollection().find().toArray();
+    } catch (err) {
+      return err;
+    }
+  }
+
+  static async findOne(data) {
+    try {
+      return await this.getCollection().findOne(data);
     } catch (err) {
       return err;
     }
