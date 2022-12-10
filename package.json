@@ -1,0 +1,30 @@
+{
+  "name": "deall-backend-enginner-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./bin/www.js",
+    "start": "node ./bin/www.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LordFeexz/Deall-backend-enginner-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LordFeexz/Deall-backend-enginner-test/issues"
+  },
+  "homepage": "https://github.com/LordFeexz/Deall-backend-enginner-test#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.12.1"
+  }
+}
