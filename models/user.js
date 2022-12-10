@@ -36,6 +36,16 @@ class User {
       return err;
     }
   }
+
+  static async destroy(data) {
+    try {
+      return await this.getCollection().findOneAndDelete({
+        _id: ObjectId(data),
+      });
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = User;
