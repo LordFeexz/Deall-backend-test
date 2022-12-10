@@ -31,6 +31,11 @@ class User {
 
   static async create(data) {
     try {
+      const { name, username, email, password, role } = data;
+
+      if (!name || !username || !email || !password || !role)
+        throw new Error("Invalid Input");
+
       return await this.getCollection().insertOne(data);
     } catch (err) {
       return err;
