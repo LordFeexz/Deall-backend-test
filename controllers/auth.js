@@ -42,6 +42,7 @@ class Controller {
       if (!validate) throw { name: "invalid_credentials" };
 
       const payload = {
+        _id: user._id,
         email: user.email,
         username: user.username,
         role: user.role,
@@ -49,7 +50,7 @@ class Controller {
 
       const access_token = createToken(payload);
 
-      res.status(200).json(access_token);
+      res.status(200).json({ access_token });
     } catch (err) {
       next(err);
     }
