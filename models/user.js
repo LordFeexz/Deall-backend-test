@@ -28,6 +28,14 @@ class User {
       return err;
     }
   }
+
+  static async create(data) {
+    try {
+      return await this.getCollection().insertOne(data);
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = User;
