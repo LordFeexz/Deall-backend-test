@@ -20,6 +20,14 @@ class User {
       return err;
     }
   }
+
+  static async findByPk(data) {
+    try {
+      return await this.getCollection().findOne({ _id: ObjectId(data) });
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = User;
