@@ -4,4 +4,6 @@ const router = require("express").Router();
 
 router.get("/", Controller.getUsers);
 
+router.get("/:id", Controller.getUser);
+
 module.exports = router;
