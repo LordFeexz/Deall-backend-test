@@ -17,6 +17,12 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name == "invalid input") {
     status = 400;
     message = err.name;
+  } else if (err.name == "invalid token") {
+    status = 401;
+    message = err.name;
+  } else if (err.name == "Forbidden") {
+    status = 403;
+    message = err.name;
   }
   res.status(status).json({ message });
 };
