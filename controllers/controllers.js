@@ -32,6 +32,20 @@ class Controller {
       next(err);
     }
   }
+
+  static async deleteUser(req, res, next) {
+    try {
+      const id = req.params.id;
+
+      const user = await User.destroy(id);
+
+      if (!user.value) throw { name: "data not found" };
+
+      res.status(200).json({ msg: "success delete" });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
