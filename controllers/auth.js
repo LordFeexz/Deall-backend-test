@@ -5,22 +5,27 @@ const User = require("../models/user");
 class Controller {
   static async register(req, res, next) {
     try {
-      const { name, username, email, password, role } = req.body;
+      const { name, username, email, password } = req.body;
 
-      if (!name || !username || !email || !password || !role)
+      if (!name || !username || !email || !password)
         throw { name: "invalid input" };
 
-      const user = await User.findOne({ email });
+      const userEmail = await User.findOne({ email });
 
-      if (user || user !== null)
+      if (userEmail || userEmail !== null)
         throw { name: "conflict", msg: "email is already use" };
+
+      const userUsername = await User.findOne({ username });
+
+      if (userUsername || userUsername !== null)
+        throw { name: "conflict", msg: "username is already use" };
 
       await User.create({
         name,
         username,
         email,
         password: hash(password),
-        role,
+        role: "user",
       });
 
       res.status(201).json({ msg: "success register" });
@@ -31,9 +36,12 @@ class Controller {
 
   static async login(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const { email, username, password } = req.body;
 
-      const user = await User.findOne({ email });
+      if (!password) throw { name: "invalid_credentials" };
+
+      const user =
+        (await User.findOne({ email })) || (await User.findOne({ username }));
 
       if (!user) throw { name: "invalid_credentials" };
 

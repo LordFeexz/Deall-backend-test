@@ -1,3 +1,4 @@
+const { compare } = require("../helpers/bcrypt");
 const User = require("../models/user");
 
 class Controller {
@@ -6,6 +7,8 @@ class Controller {
       const users = await User.findAll();
 
       if (!users || users.length < 1) throw { name: "data not found" };
+
+      if (!users.ok) throw { name: "fail auth to db" };
 
       const result = users.map((el) => {
         delete el.password;
@@ -42,6 +45,47 @@ class Controller {
       if (!user.value) throw { name: "data not found" };
 
       res.status(200).json({ msg: "success delete" });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async updateData(req, res, next) {
+    try {
+      const { name, username, email } = req.body;
+      const id = req.params.id;
+
+      const user = await User.update(id, {
+        name,
+        username,
+        email,
+      });
+
+      if (!user.acknowledged) throw { name: "failed update" };
+
+      res.status(201).json({ msg: "success update" });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async changePassword(req, res, next) {
+    try {
+      const { _id: id } = req.user;
+
+      const { password, currentPassword } = req.body;
+
+      const user = await User.findByPk(id);
+
+      const validate = compare(currentPassword, user.password);
+
+      if (!validate) throw { name: "invalid password" };
+
+      const updated = await User.update(id, { password });
+
+      if (!updated.acknowledged) throw { name: "failed update" };
+
+      res.status(201).json({ msg: "success change password" });
     } catch (err) {
       next(err);
     }
