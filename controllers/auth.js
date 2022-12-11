@@ -5,9 +5,9 @@ const User = require("../models/user");
 class Controller {
   static async register(req, res, next) {
     try {
-      const { name, username, email, password, role } = req.body;
+      const { name, username, email, password } = req.body;
 
-      if (!name || !username || !email || !password || !role)
+      if (!name || !username || !email || !password)
         throw { name: "invalid input" };
 
       const userEmail = await User.findOne({ email });
@@ -25,7 +25,7 @@ class Controller {
         username,
         email,
         password: hash(password),
-        role,
+        role: "user",
       });
 
       res.status(201).json({ msg: "success register" });
