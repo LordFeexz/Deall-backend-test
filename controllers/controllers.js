@@ -46,6 +46,25 @@ class Controller {
       next(err);
     }
   }
+
+  static async updateData(req, res, next) {
+    try {
+      const { name, username, email } = req.body;
+      const id = req.params.id;
+
+      const user = await User.update(id, {
+        name,
+        username,
+        email,
+      });
+
+      if (!user.acknowledged) throw { name: "failed update" };
+
+      res.status(201).json({ msg: "success update" });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;

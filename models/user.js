@@ -46,6 +46,17 @@ class User {
       return err;
     }
   }
+
+  static async update(id, data) {
+    try {
+      return this.getCollection().updateOne(
+        { _id: ObjectId(id) },
+        { $set: data }
+      );
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 module.exports = User;
