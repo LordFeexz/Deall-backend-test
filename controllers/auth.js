@@ -10,10 +10,15 @@ class Controller {
       if (!name || !username || !email || !password || !role)
         throw { name: "invalid input" };
 
-      const user = await User.findOne({ email });
+      const userEmail = await User.findOne({ email });
 
-      if (user || user !== null)
+      if (userEmail || userEmail !== null)
         throw { name: "conflict", msg: "email is already use" };
+
+      const userUsername = await User.findOne({ username });
+
+      if (userUsername || userUsername !== null)
+        throw { name: "conflict", msg: "username is already use" };
 
       await User.create({
         name,
@@ -31,9 +36,10 @@ class Controller {
 
   static async login(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const { email, username, password } = req.body;
 
-      const user = await User.findOne({ email });
+      const user =
+        (await User.findOne({ email })) || (await User.findOne({ username }));
 
       if (!user) throw { name: "invalid_credentials" };
 
