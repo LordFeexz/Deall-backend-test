@@ -38,6 +38,8 @@ class Controller {
     try {
       const { email, username, password } = req.body;
 
+      if (!password) throw { name: "invalid_credentials" };
+
       const user =
         (await User.findOne({ email })) || (await User.findOne({ username }));
 

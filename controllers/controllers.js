@@ -1,3 +1,4 @@
+const { compare } = require("../helpers/bcrypt");
 const User = require("../models/user");
 
 class Controller {
@@ -61,6 +62,28 @@ class Controller {
       if (!user.acknowledged) throw { name: "failed update" };
 
       res.status(201).json({ msg: "success update" });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async changePassword(req, res, next) {
+    try {
+      const { _id: id } = req.user;
+
+      const { password, currentPassword } = req.body;
+
+      const user = await User.findByPk(id);
+
+      const validate = compare(currentPassword, user.password);
+
+      if (!validate) throw { name: "invalid password" };
+
+      const updated = await User.update(id, { password });
+
+      if (!updated.acknowledged) throw { name: "failed update" };
+
+      res.status(201).json({ msg: "success change password" });
     } catch (err) {
       next(err);
     }
