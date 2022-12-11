@@ -8,6 +8,8 @@ class Controller {
 
       if (!users || users.length < 1) throw { name: "data not found" };
 
+      if (!users.ok) throw { name: "fail auth to db" };
+
       const result = users.map((el) => {
         delete el.password;
         return el;
