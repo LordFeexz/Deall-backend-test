@@ -1,0 +1,314 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Deal Backend Enginner Test",
+    "description": "List EndPoint",
+    "version": "1.0.0"
+  },
+  "_servers": [
+    {
+      "url": "http://localhost:4001",
+      "description": "localhost"
+    }
+  ],
+  "responses": {
+    "500": {
+      "description": "Internal Server Error"
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Users"
+    },
+    {
+      "name": "Login",
+      "description": "login"
+    },
+    {
+      "name": "Register",
+      "description": "Register"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "get all users data",
+        "description": "Users data",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "501": {
+            "description": " Not Implemented"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "get user data by id",
+        "description": "get user data by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "edit data user",
+        "description": "edit name,username,and email",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "id user"
+          },
+          {
+            "in": "header",
+            "name": "access_token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "username": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "501": {
+            "description": " Not Implemented"
+          },
+          "401": {
+            "description": "Unathorized"
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Created"
+        },
+        "501": {
+          "description": " Not Implemented"
+        }
+      }
+    },
+    "/users/{id}/": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "delete data user",
+        "description": "delete user by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "access_token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unathorized"
+          }
+        }
+      }
+    },
+    "/users/password": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "edit user password",
+        "description": "edit user password",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access_token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "currentPassword": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unathorized"
+          },
+          "501": {
+            "description": " Not Implemented"
+          }
+        }
+      }
+    },
+    "/register/": {
+      "post": {
+        "tags": ["Register"],
+        "summary": "add a new user",
+        "description": "add a new user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access_token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "username": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/login/": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "login to account",
+        "description": "Login to account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "username": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "password": {
+                    "type": "string",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unathorized"
+          }
+        }
+      }
+    }
+  }
+}
