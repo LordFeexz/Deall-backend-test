@@ -1,4 +1,4 @@
-const { compare } = require("../helpers/bcrypt");
+const { compare, hash } = require("../helpers/bcrypt");
 const User = require("../models/user");
 
 class Controller {
@@ -8,7 +8,7 @@ class Controller {
 
       if (!users || users.length < 1) throw { name: "data not found" };
 
-      if (!users.ok) throw { name: "fail auth to db" };
+      if (users.ok) throw { name: "fail auth to db" };
 
       const result = users.map((el) => {
         delete el.password;
@@ -81,7 +81,7 @@ class Controller {
 
       if (!validate) throw { name: "invalid password" };
 
-      const updated = await User.update(id, { password });
+      const updated = await User.update(id, { password: hash(password) });
 
       if (!updated.acknowledged) throw { name: "failed update" };
 
