@@ -23,6 +23,12 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name == "Forbidden") {
     status = 403;
     message = err.name;
+  } else if (err.name == "failed update" || err.name == "fail auth to db") {
+    status = 501;
+    message = err.name;
+  } else if (err.name == "invalid password") {
+    status = 401;
+    message = err.name;
   }
   res.status(status).json({ message });
 };
