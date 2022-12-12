@@ -49,7 +49,7 @@
         }
       }
     },
-    "/user/{id}": {
+    "/users/{id}/": {
       "get": {
         "tags": ["Users"],
         "summary": "get user data by id",
@@ -73,9 +73,7 @@
             "description": "Not Found"
           }
         }
-      }
-    },
-    "/users/{id}": {
+      },
       "put": {
         "tags": ["Users"],
         "summary": "edit data user",
@@ -132,16 +130,6 @@
           }
         }
       },
-      "responses": {
-        "201": {
-          "description": "Created"
-        },
-        "501": {
-          "description": " Not Implemented"
-        }
-      }
-    },
-    "/users/{id}/": {
       "delete": {
         "tags": ["Users"],
         "summary": "delete data user",
