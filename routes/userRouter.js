@@ -9,9 +9,9 @@ router.get("/:id", Controller.getUser);
 
 router.use(authentication);
 
-router.use(authorize);
-
 router.patch("/password", Controller.changePassword);
+
+router.use(authorize);
 
 router.delete("/:id", Controller.deleteUser);
 
